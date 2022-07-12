@@ -36,8 +36,13 @@ function move(i) {
 	if (isFinished) {
 		alert("win");
 	}
+	let promise = new Promise((resolve, reject) => {
+		resolve(moveSound());
+	});
 
-	moveSound();
+	promise.then(() => {
+		moveSound();
+	});
 }
 
 const numbers = [...Array(15).keys()].sort(() => Math.random() - 0.5);
@@ -67,8 +72,9 @@ for (let i = 1; i <= 15; i++) {
 		move(i);
 	});
 }
-var audio = new Audio();
-audio.src = "../audio/move.mp3";
+
 function moveSound() {
+	var audio = new Audio();
+	audio.src = "../audio/move.mp3";
 	audio.play();
 }
