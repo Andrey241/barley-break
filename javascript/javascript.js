@@ -40,9 +40,11 @@ function move(i) {
 		resolve(moveSound());
 	});
 
-	promise.then(() => {
-		moveSound();
-	});
+	// promise.then(() => {
+	// 	moveSound();
+	// });
+
+	document.querySelector("audio").play();
 }
 
 const numbers = [...Array(15).keys()].sort(() => Math.random() - 0.5);
@@ -75,6 +77,7 @@ for (let i = 1; i <= 15; i++) {
 
 function moveSound() {
 	var audio = new Audio();
-	audio.src = "../audio/move.mp3";
+	audio.src =
+		"https://drive.google.com/file/d/1szoW-9896FZP7ygmZ6lMT7yUBzwTFlag/view";
 	audio.play();
 }
