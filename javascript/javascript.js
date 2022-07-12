@@ -67,10 +67,8 @@ for (let i = 1; i <= 15; i++) {
 		move(i);
 	});
 }
-
+var audio = new Audio();
+audio.src = "../audio/move.mp3";
 function moveSound() {
-	var audio = new Audio();
-	audio.preload = "auto";
-	audio.src = "../audio/move.mp3";
 	audio.play();
 }
