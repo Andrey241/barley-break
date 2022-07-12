@@ -1,0 +1,22 @@
+.field {
+	width: 400px;
+	height: 400px;
+	border: 1px solid black;
+	background: url(../images/bg.jpg);
+	position: relative;
+}
+
+.cell {
+	width: 100px;
+	height: 100px;
+	border: 3px solid black;
+	border-radius: 10px;
+	position: absolute;
+	font-size: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	transition: ease-in 0.3s all;
+	cursor: pointer;
+}
