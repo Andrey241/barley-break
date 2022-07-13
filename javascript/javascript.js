@@ -1,8 +1,13 @@
 let cells = [];
 let incement = 100;
+if (localStorage.getItem("save")) {
+	document.querySelector("[data-clear]").removeAttribute("disabled");
+}
 function createGame(cellSize = 100) {
 	if (window.screen.availWidth < 433) {
 		cellSize = 50;
+	} else {
+		document.querySelector("[data-inc]").removeAttribute("disabled");
 	}
 	const field = document.querySelector(".field"),
 		cell = document.querySelectorAll(".cell");
@@ -29,7 +34,6 @@ function createGame(cellSize = 100) {
 
 	console.log(cells);
 	function move(i) {
-		debugger;
 		const cell = cells[i],
 			leftDiff = Math.abs(empty.left - cell.left),
 			topDiff = Math.abs(empty.top - cell.top);
@@ -100,23 +104,13 @@ function createGame(cellSize = 100) {
 		}
 	} else {
 		for (let i = 1; i <= 15; i++) {
-			const cell = document.createElement("div"),
-				value = numbers[i - 1] + 1;
-
+			const cell = document.createElement("div");
 			cell.className = "cell";
-			cell.innerHTML = value;
-
-			const left = i % 4,
-				top = (i - left) / 4;
-
-			cell.style.left = `${cellSize * left}px`;
-			cell.style.top = `${cellSize * top}px`;
-
+			debugger;
+			cell.innerHTML = cells[i].value;
+			cell.style.left = `${cellSize * cells[i].left}px`;
+			cell.style.top = `${cellSize * cells[i].top}px`;
 			field.append(cell);
-
-			cell.addEventListener("click", () => {
-				move(cells[i].i);
-			});
 		}
 	}
 
@@ -131,6 +125,12 @@ function moveSound() {
 	audio.play();
 }
 
+function changeSetting() {
+	var audio = new Audio();
+	audio.src = "https://andrey241.github.io/barley-break/audio/change.mp3";
+	audio.play();
+}
+
 //buttons
 
 const buttons = document.querySelectorAll("button");
@@ -142,8 +142,10 @@ buttons.forEach((item) => {
 				save();
 				break;
 			case "data-load":
+				load();
 				break;
 			case "data-clear":
+				clearSave();
 				break;
 			case "data-inc":
 				inc();
@@ -161,14 +163,45 @@ buttons.forEach((item) => {
 });
 
 function save() {
+	console.log(cells);
 	localStorage.setItem("save", true);
-	localStorage.clear();
 	localStorage.setItem("cells", JSON.stringify(cells));
+	console.log(localStorage.getItem("cells"));
+
+	document.querySelector("[data-clear]").removeAttribute("disabled");
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+
+	promise.then(() => {
+		changeSetting();
+	});
 }
 
 function load() {
+	clearField();
 	cells = JSON.parse(localStorage.getItem("cells"));
 	createGame();
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+	promise.then(() => {
+		changeSetting();
+	});
+}
+
+function clearSave() {
+	localStorage.clear();
+	document.querySelector("[data-clear]").setAttribute("disabled", "disabled");
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+	promise.then(() => {
+		changeSetting();
+	});
 }
 
 function clearField() {
@@ -182,7 +215,14 @@ function inc() {
 	clearField();
 	incement += 50;
 	createGame(incement);
-	document.querySelector("[data-dec]").removeAttribute("disabled");
+	document.querySelector("[data-dec]").toggleAttribute("disabled");
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+	promise.then(() => {
+		changeSetting();
+	});
 }
 
 function dec() {
@@ -193,4 +233,11 @@ function dec() {
 	if (incement === 100) {
 		document.querySelector("[data-dec]").toggleAttribute("disabled");
 	}
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+	promise.then(() => {
+		changeSetting();
+	});
 }
