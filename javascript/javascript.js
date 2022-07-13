@@ -1,6 +1,9 @@
 let cells = [];
 let incement = 100;
 function createGame(cellSize = 100) {
+	if (window.screen.availWidth < 433) {
+		cellSize = 50;
+	}
 	const field = document.querySelector(".field"),
 		cell = document.querySelectorAll(".cell");
 
@@ -170,7 +173,6 @@ function load() {
 
 function clearField() {
 	document.querySelectorAll(".cell").forEach((item) => {
-		console.log(item);
 		item.remove();
 	});
 }
@@ -180,6 +182,7 @@ function inc() {
 	clearField();
 	incement += 50;
 	createGame(incement);
+	document.querySelector("[data-dec]").removeAttribute("disabled");
 }
 
 function dec() {
@@ -187,4 +190,7 @@ function dec() {
 	clearField();
 	incement -= 50;
 	createGame(incement);
+	if (incement === 100) {
+		document.querySelector("[data-dec]").toggleAttribute("disabled");
+	}
 }

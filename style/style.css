@@ -20,3 +20,9 @@
 i {
 	margin: 0 5px 0 0;
 }
+
+@media (max-width: 433px) {
+	.cell {
+		font-size: 14px;
+	}
+}
