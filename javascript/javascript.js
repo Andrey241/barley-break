@@ -68,8 +68,6 @@ function createGame(cellSize = 100) {
 		promise.then(() => {
 			moveSound();
 		});
-
-		// document.querySelector("audio").play();
 	}
 
 	const numbers = [...Array(15).keys()].sort(() => Math.random() - 0.5);
@@ -84,6 +82,8 @@ function createGame(cellSize = 100) {
 
 			const left = i % 4,
 				top = (i - left) / 4;
+
+			cell.setAttribute("i", i);
 
 			cells.push({
 				value,
@@ -106,7 +106,6 @@ function createGame(cellSize = 100) {
 		for (let i = 1; i <= 15; i++) {
 			const cell = document.createElement("div");
 			cell.className = "cell";
-			debugger;
 			cell.innerHTML = cells[i].value;
 			cell.style.left = `${cellSize * cells[i].left}px`;
 			cell.style.top = `${cellSize * cells[i].top}px`;
@@ -183,6 +182,12 @@ function load() {
 	clearField();
 	cells = JSON.parse(localStorage.getItem("cells"));
 	createGame();
+	let i = 1;
+
+	document.querySelectorAll(".cell").forEach((item) => {
+		item.setAttribute("i", i);
+		i++;
+	});
 
 	let promise = new Promise((resolve, reject) => {
 		resolve(changeSetting());

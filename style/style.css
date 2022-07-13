@@ -1,3 +1,7 @@
+body {
+	background: url(../images/images.jfif);
+}
+
 .field {
 	border: 1px solid black;
 	background: url(../images/bg.jpg);
@@ -25,4 +29,8 @@ i {
 	.cell {
 		font-size: 14px;
 	}
+}
+button {
+	display: inline-block !important;
+	width: auto !important;
 }
