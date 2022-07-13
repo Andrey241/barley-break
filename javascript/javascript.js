@@ -1,8 +1,8 @@
 let cells = [];
-function createGame() {
+let incement = 100;
+function createGame(cellSize = 100) {
 	const field = document.querySelector(".field"),
 		cell = document.querySelectorAll(".cell");
-	let cellSize = 100;
 
 	function addSize() {
 		field.style.width = `${4 * cellSize}px`;
@@ -65,9 +65,8 @@ function createGame() {
 		// document.querySelector("audio").play();
 	}
 
-	//const numbers = [...Array(15).keys()].sort(() => Math.random() - 0.5);
-	let numbers = [...Array(15).keys()];
-	console.log(numbers);
+	const numbers = [...Array(15).keys()].sort(() => Math.random() - 0.5);
+
 	if (cells.length == 1) {
 		for (let i = 1; i <= 15; i++) {
 			const cell = document.createElement("div"),
@@ -93,7 +92,7 @@ function createGame() {
 			field.append(cell);
 
 			cell.addEventListener("click", () => {
-				move(i);
+				move(cells[i].i);
 			});
 		}
 	} else {
@@ -147,6 +146,7 @@ buttons.forEach((item) => {
 				inc();
 				break;
 			case "data-dec":
+				dec();
 				break;
 			case "data-res":
 				inc();
@@ -176,6 +176,15 @@ function clearField() {
 }
 
 function inc() {
+	cells = [];
 	clearField();
-	createGame();
+	incement += 50;
+	createGame(incement);
+}
+
+function dec() {
+	cells = [];
+	clearField();
+	incement -= 50;
+	createGame(incement);
 }
