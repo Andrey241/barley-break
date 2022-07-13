@@ -149,7 +149,7 @@ buttons.forEach((item) => {
 				dec();
 				break;
 			case "data-res":
-				inc();
+				location.reload();
 				break;
 			default:
 				break;
