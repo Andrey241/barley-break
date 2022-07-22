@@ -1,4 +1,8 @@
+let off = document.querySelector("[data-offSound]");
+let on = document.querySelector("[data-on]");
+
 let cells = [];
+
 let sound = {
 	move: "https://andrey241.github.io/barley-break/audio/move.mp3",
 	change: "https://andrey241.github.io/barley-break/audio/change.mp3",
@@ -139,38 +143,48 @@ function changeSetting() {
 
 const buttons = document.querySelectorAll("button");
 buttons.forEach((item) => {
-	item.addEventListener("click", (e) => {
-		console.log(e.target.getAttributeNames()[0]);
-		switch (e.target.getAttributeNames()[0]) {
-			case "data-save":
-				save();
-				break;
-			case "data-load":
-				load();
-				break;
-			case "data-clear":
-				clearSave();
-				break;
-			case "data-inc":
-				inc();
-				break;
-			case "data-dec":
-				dec();
-				break;
-			case "data-res":
-				location.reload();
-				break;
-			case "data-off":
-				soundOff();
-				break;
-			default:
-				break;
-		}
-	});
+	item.addEventListener(
+		"click",
+		(e) => {
+			console.log(e.target.getAttributeNames()[0]);
+			switch (e.target.getAttributeNames()[0]) {
+				case "data-save":
+					save();
+					break;
+				case "data-load":
+					load();
+					break;
+				case "data-clear":
+					clearSave();
+					break;
+				case "data-inc":
+					inc();
+					break;
+				case "data-dec":
+					dec();
+					break;
+				case "data-res":
+					location.reload();
+					break;
+				case "data-off":
+					soundOff();
+					break;
+				default:
+					break;
+			}
+		},
+		{ capture: true }
+	);
 });
 
 function soundOff() {
 	sound.state = !sound.state;
+	sound.state
+		? (document.querySelector("[data-off] p").innerHTML = "sound on")
+		: (document.querySelector("[data-off] p").innerHTML = "sound off");
+	off.classList.toggle("d-none");
+	on.classList.toggle("d-none");
+	document.querySelector("[data-off]").classList.toggle("btn-dark");
 }
 
 function save() {
@@ -230,7 +244,7 @@ function inc() {
 	clearField();
 	incement += 50;
 	createGame(incement);
-	document.querySelector("[data-dec]").toggleAttribute("disabled");
+	document.querySelector("[data-dec]").removeAttribute("disabled");
 
 	let promise = new Promise((resolve, reject) => {
 		resolve(changeSetting());

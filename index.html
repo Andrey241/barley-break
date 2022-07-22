@@ -64,7 +64,7 @@
                class="col-6 col-sm-5 mt-3 m-sm-3 text-start btn btn-dark btn-lg text-uppercase fw-bold "> <i
                   class="bi bi-shield-plus"></i></i>increment
             </button>
-            <button disabled data-dec type="button"
+            <button disabled data-dec type="button "
                class="col-6 col-sm-5 mt-3 m-sm-3 text-start btn btn-dark btn-lg text-uppercase fw-bold"> <i
                   class="bi bi-shield-minus"></i>decrement
             </button>
@@ -73,8 +73,10 @@
                   class="bi bi-arrow-counterclockwise"></i>restart
             </button>
             <button data-off type="button"
-               class="col-6 col-sm-5 mt-3 m-sm-3 text-start btn btn-success btn-lg text-uppercase fw-bold"> <i
-                  class="bi bi-music-note-beamed"></i>sound off
+               class="col-6 col-sm-5 mt-3 m-sm-3 text-start btn btn-success btn-lg text-uppercase fw-bold">
+               <i data-off data-on class="bi bi-volume-off-fill"></i>
+               <i data-off data-offSound class="bi bi-volume-mute-fill d-none"></i>
+               <p data-off class="d-inline">sound off</p>
             </button>
          </div>
 
