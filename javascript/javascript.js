@@ -6,7 +6,7 @@ let cells = [];
 let sound = {
 	move: "https://andrey241.github.io/barley-break/audio/move.mp3",
 	change: "https://andrey241.github.io/barley-break/audio/change.mp3",
-	state: true,
+	enabled: true,
 };
 let incement = 100;
 if (localStorage.getItem("save")) {
@@ -129,13 +129,13 @@ createGame();
 
 function moveSound() {
 	var audio = new Audio();
-	sound.state ? (audio.src = sound.move) : null;
+	sound.enabled ? (audio.src = sound.move) : null;
 	audio.play();
 }
 
 function changeSetting() {
 	var audio = new Audio();
-	sound.state ? (audio.src = sound.change) : null;
+	sound.enabled ? (audio.src = sound.change) : null;
 	audio.play();
 }
 
@@ -178,10 +178,12 @@ buttons.forEach((item) => {
 });
 
 function soundOff() {
-	sound.state = !sound.state;
-	sound.state
-		? (document.querySelector("[data-off] p").innerHTML = "sound on")
-		: (document.querySelector("[data-off] p").innerHTML = "sound off");
+	sound.enabled = !sound.enabled;
+
+	document.querySelector("[data-off] p").innerHTML = sound.enabled
+		? "sound on"
+		: "sound off";
+
 	off.classList.toggle("d-none");
 	on.classList.toggle("d-none");
 	document.querySelector("[data-off]").classList.toggle("btn-dark");
@@ -247,10 +249,24 @@ function clearField() {
 }
 
 function inc() {
-	cells = [];
-	clearField();
-	incement += 50;
-	createGame(incement);
+	let count = 0;
+	const interval = setInterval(() => {
+		let promise = new Promise((resolve, reject) => {
+			resolve(changeSetting());
+		});
+		promise.then(() => {
+			changeSetting();
+		});
+		cells = [];
+		incement += 1;
+		clearField();
+		createGame(incement);
+		count++;
+		if (count == 25) {
+			clearInterval(interval);
+		}
+	}, 25);
+
 	document.querySelector("[data-dec]").removeAttribute("disabled");
 
 	let promise = new Promise((resolve, reject) => {
@@ -262,11 +278,25 @@ function inc() {
 }
 
 function dec() {
-	cells = [];
-	clearField();
-	incement -= 50;
-	createGame(incement);
-	if (incement === 100) {
+	let count = 0;
+	const interval = setInterval(() => {
+		let promise = new Promise((resolve, reject) => {
+			resolve(changeSetting());
+		});
+		promise.then(() => {
+			changeSetting();
+		});
+		cells = [];
+		clearField();
+		incement -= 1;
+		createGame(incement);
+		count++;
+		if (count == 25) {
+			clearInterval(interval);
+		}
+	}, 25);
+
+	if (incement <= 125) {
 		document.querySelector("[data-dec]").toggleAttribute("disabled");
 	}
 
