@@ -9,6 +9,7 @@ let sound = {
 	enabled: true,
 };
 let incement = 100;
+
 if (localStorage.getItem("save")) {
 	document.querySelector("[data-clear]").removeAttribute("disabled");
 }
@@ -41,7 +42,6 @@ function createGame(cellSize = 100) {
 		cells.push(empty);
 	}
 
-	console.log(cells);
 	function move(i) {
 		const cell = cells[i],
 			leftDiff = Math.abs(empty.left - cell.left),
@@ -108,7 +108,7 @@ function createGame(cellSize = 100) {
 			field.append(cell);
 
 			cell.addEventListener("click", () => {
-				move(cells[i].i);
+				move(i);
 			});
 		}
 	} else {
@@ -146,7 +146,6 @@ buttons.forEach((item) => {
 	item.addEventListener(
 		"click",
 		(e) => {
-			console.log(e.target.getAttributeNames()[0]);
 			switch (e.target.getAttributeNames()[0]) {
 				case "data-save":
 					save();
