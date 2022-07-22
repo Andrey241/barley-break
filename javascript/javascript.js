@@ -185,6 +185,13 @@ function soundOff() {
 	off.classList.toggle("d-none");
 	on.classList.toggle("d-none");
 	document.querySelector("[data-off]").classList.toggle("btn-dark");
+
+	let promise = new Promise((resolve, reject) => {
+		resolve(changeSetting());
+	});
+	promise.then(() => {
+		changeSetting();
+	});
 }
 
 function save() {
