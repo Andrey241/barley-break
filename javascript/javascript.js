@@ -1,4 +1,9 @@
 let cells = [];
+let sound = {
+	move: "https://andrey241.github.io/barley-break/audio/move.mp3",
+	change: "https://andrey241.github.io/barley-break/audio/change.mp3",
+	state: true,
+};
 let incement = 100;
 if (localStorage.getItem("save")) {
 	document.querySelector("[data-clear]").removeAttribute("disabled");
@@ -42,7 +47,6 @@ function createGame(cellSize = 100) {
 			return;
 		}
 
-		//const cell = document.createElement("div");
 		cell.element.style.left = `${cellSize * empty.left}px`;
 		cell.element.style.top = `${cellSize * empty.top}px`;
 
@@ -58,6 +62,7 @@ function createGame(cellSize = 100) {
 		const isFinished = cells.every((cell) => {
 			return cell.value === cell.top * 4 + cell.left;
 		});
+
 		if (isFinished) {
 			alert("win");
 		}
@@ -120,13 +125,13 @@ createGame();
 
 function moveSound() {
 	var audio = new Audio();
-	audio.src = "https://andrey241.github.io/barley-break/audio/move.mp3";
+	sound.state ? (audio.src = sound.move) : null;
 	audio.play();
 }
 
 function changeSetting() {
 	var audio = new Audio();
-	audio.src = "https://andrey241.github.io/barley-break/audio/change.mp3";
+	sound.state ? (audio.src = sound.change) : null;
 	audio.play();
 }
 
@@ -155,17 +160,22 @@ buttons.forEach((item) => {
 			case "data-res":
 				location.reload();
 				break;
+			case "data-off":
+				soundOff();
+				break;
 			default:
 				break;
 		}
 	});
 });
 
+function soundOff() {
+	sound.state = !sound.state;
+}
+
 function save() {
-	console.log(cells);
 	localStorage.setItem("save", true);
 	localStorage.setItem("cells", JSON.stringify(cells));
-	console.log(localStorage.getItem("cells"));
 
 	document.querySelector("[data-clear]").removeAttribute("disabled");
 
