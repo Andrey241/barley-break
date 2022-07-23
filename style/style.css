@@ -1,5 +1,5 @@
 body {
-	background: url(../images/images.jfif);
+	background-color: rgba(230, 219, 219, 0.34);
 }
 
 .field {
@@ -34,4 +34,3 @@ button {
 	display: inline-block !important;
 	width: auto !important;
 }
-
